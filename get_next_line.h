@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 09:42:31 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/07 14:44:18 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/07 22:46:05 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4000
+#  define BUFFER_SIZE 40
 # endif
 
 char	*get_next_line(int fd);
