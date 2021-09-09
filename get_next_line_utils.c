@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:10:38 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/08 16:54:04 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/10 00:22:09 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 void	ft_free(char *line)
 {
-	int	i;
-
-	i = 0;
-	while (line[i] != '\0')
+	if (line)
 	{
-		free(line[i]);
-		i++;
+		free(line);
+		line = NULL;
 	}
 }
 
@@ -40,28 +37,63 @@ int	ft_strchr(char *tonext, char c)
 	return (-1);
 }
 
-char	*ft_strnjoin(char *tonext, char *line, int size)
+int		ft_strlen(char *str)
 {
-	char	*snew;
-	int		n1;
-	int		n2;
+	int		i;
+	
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] != '\0')
+		i++;
+	return(i);
+}
+
+char	*ft_strnjoin(char *previous, char *line, int size)
+{
+	char	*joined;
+	int		i;
+	int		j;
+	
+	i = 0;
+	j = ft_strlen(previous);
+	if (line[i] == '\0')
+		return (NULL);
+	joined = malloc(size + j + 1);
+	if (!joined)
+		return (NULL);
+	while( i <= size + j)
+	{
+		if ( i < j)
+			joined[i] = previous[i];
+		if (i >= j)
+			joined[i] = line[i - j];
+		i++;
+	}
+	joined[i] = '\0';
+	if (previous)
+		ft_free(previous);
+	return (joined);
+}
+
+char	*ft_strndup(char *s1, int start, int length)
+{
+	char	*thecopy;
 	int		i;
 
 	i = 0;
-	if (tonext == NULL || line == NULL)
+	if (s1 == NULL)
 		return (NULL);
-	n1 = ft_strlen(tonext);
-	n2 = ft_strlen(line);
-	snew = (char *) malloc(n1 + n2 + 1);
-	if (snew == NULL || !tonext || !line)
+	thecopy = malloc(sizeof(char) * length + 1);
+	if (thecopy == NULL)
 		return (NULL);
-	ft_copys1(tonext, snew, i, n1);
-	i = 0;
-	while (line[i] != '\0')
+	while (i < length)
 	{
-		snew[n1 + i] = line[i];
+		thecopy[i] = s1[i + start];
 		i++;
 	}
-	snew[n1 + n2] = '\0';
-	return (snew);
+	thecopy[i] = '\0';
+	return (thecopy);
 }
+
+
