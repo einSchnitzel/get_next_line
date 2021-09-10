@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:07:46 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/10 14:40:24 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/10 17:37:12 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,27 @@ char	*ft_calloc(int size, char filler)
 //copy after '\n' to helper and copy helper to tonext, so that only afte '\n' is left
 //copy text from tonext to next_line and return 
 //free helper and line
-char	*ft_prepnext(char *tonext, int location, int size)
+
+char	*ft_prepnext(char **tonext, int location, int size)
 {
 	char	*next_line;
 	char	*helper;
 	int		i;
 
-	if (size <= 0 || !tonext)
+	if (size <= 0 || !*tonext)
 	{
-		if (tonext != NULL)
-			return (tonext);
+		if (*tonext != NULL)
+			return (*tonext);
 		return (NULL);
 	}
-	i = ft_strlen(tonext);
-	helper = ft_strndup(tonext, location, i - location);
-	next_line = ft_strndup(tonext, 0, location);
+	i = ft_strlen(*tonext);
+	helper = ft_strndup(*tonext, location + 1, i - location);
+	next_line = ft_strndup(*tonext, 0, location);
+	printf("next_line return %s\n", next_line);
 	i = ft_strlen(helper);
-	tonext = ft_strndup(helper, 0, i);
-	ft_free(helper);
+	*tonext = ft_strndup(helper, 0, i);
+	if (helper != NULL)
+		ft_free(&helper);
 	return (next_line);
 }
 
@@ -65,8 +68,9 @@ char	*get_next_line(int fd)
 	int			location;
 	int			size;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 500)
 		return (NULL);
+	line = NULL;
 	if (tonext == NULL)
 		tonext = ft_calloc(BUFFER_SIZE + 1, '\0');
 	location = ft_strchr(tonext, '\n');
@@ -80,9 +84,8 @@ char	*get_next_line(int fd)
 			break ;
 		tonext = ft_strnjoin(tonext, line, size);
 		location = ft_strchr(tonext, '\n');
-		ft_free(line);
 	}
-	if (line)
-		ft_free(line);
-	return (ft_prepnext(tonext, location, size));
+	if (line != NULL)
+		ft_free(&line);
+	return (ft_prepnext(&tonext, location, size));
 }

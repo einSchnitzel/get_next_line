@@ -6,19 +6,26 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:10:38 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/10 13:47:16 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/10 17:44:43 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	ft_free(char *line)
+void	ft_free(char **line)
 {
-	if (line)
-	{
-		free(line);
-		line = NULL;
-	}
+	//PRINT_HERE(line);
+	// if (line || line[0] != '\0')
+	// {
+	// 	PRINT_HERE(line);
+	// 	free(line);
+	// 	line = NULL;
+	// }
+	//if (*line == NULL)
+	//	return;
+	//PRINT_HERE(line);
+	free(*line);
+	*line = NULL;
 }
 
 int	ft_strchr(char *tonext, char c)
@@ -57,14 +64,14 @@ char	*ft_strnjoin(char *previous, char *line, int size)
 
 	i = 0;
 	j = ft_strlen(previous);
-	if (line[i] == '\0')
+	if (line[0] == '\0')
 		return (NULL);
 	joined = malloc(size + j + 1);
 	if (!joined)
 		return (NULL);
 	while (i <= size + j)
 	{
-		if (i < j)
+		if (i < j && previous != NULL)
 			joined[i] = previous[i];
 		if (i >= j)
 			joined[i] = line[i - j];
@@ -72,7 +79,7 @@ char	*ft_strnjoin(char *previous, char *line, int size)
 	}
 	joined[i] = '\0';
 	if (previous)
-		ft_free(previous);
+		ft_free(&previous);
 	return (joined);
 }
 
