@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 09:42:31 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/10 17:37:18 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/11 01:16:45 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 # endif
 
 // DEBUGGING, DELETE IT LATER
-# define PRINT_HERE(var) (printf("\n at line: %d, in file: %s text: %s\n", __LINE__, __FILE__,var))
+# define PRINT_HERE(name, var) (printf("\n at line: %d, in file: %s var:%s %p\n", __LINE__, __FILE__, name,var ))
 
 char	*get_next_line(int fd);
 char	*ft_calloc(int size, char filler);
 char	*ft_prepnext(char **tonext, int location, int size);
 void	ft_free(char **line);
 int		ft_strlen(char *str);
-int		ft_strchr(char *tonext, char c);
+int		ft_strchr(char *tonext, char c, int flag);
 char	*ft_strnjoin(char *tonext, char *line, int size);
 char	*ft_strndup(char *s1, int start, int length);
 

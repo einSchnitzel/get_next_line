@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:10:38 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/10 17:44:43 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/11 01:17:16 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ void	ft_free(char **line)
 	*line = NULL;
 }
 
-int	ft_strchr(char *tonext, char c)
+int	ft_strchr(char *tonext, char c, int flag)
 {
 	int		i;
 
+	if (flag == 1 && !tonext)
+		return (-100);
 	i = 0;
 	while (tonext[i] != '\0')
 	{
