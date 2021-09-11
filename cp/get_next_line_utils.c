@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:10:38 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/11 01:17:16 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/11 17:07:35 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,21 @@
 
 void	ft_free(char **line)
 {
-	//PRINT_HERE(line);
-	// if (line || line[0] != '\0')
-	// {
-	// 	PRINT_HERE(line);
-	// 	free(line);
-	// 	line = NULL;
-	// }
-	//if (*line == NULL)
-	//	return;
-	//PRINT_HERE(line);
 	free(*line);
 	*line = NULL;
 }
 
-int	ft_strchr(char *tonext, char c, int flag)
+int	ft_strchr(char *s, char c, int flag)
 {
 	int		i;
 
-	if (flag == 1 && !tonext)
+	if (flag == 1 && !s)
 		return (-100);
 	i = 0;
-	while (tonext[i] != '\0')
+	while (s[i] && s)
 	{
-		if (tonext[i] == c)
-		{
+		if (s[i] == c)
 			return (i);
-		}
 		i++;
 	}
 	return (-1);
@@ -53,7 +41,7 @@ int	ft_strlen(char *str)
 	i = 0;
 	if (!str)
 		return (0);
-	while (str[i] != '\0')
+	while (str && str[i] != '\0')
 		i++;
 	return (i);
 }
@@ -93,12 +81,12 @@ char	*ft_strndup(char *s1, int start, int length)
 	i = 0;
 	if (s1 == NULL)
 		return (NULL);
-	thecopy = malloc(sizeof(char) * length + 1);
+	thecopy = malloc(length + 1);
 	if (thecopy == NULL)
 		return (NULL);
-	while (i < length)
+	while (i < length && s1 && s1[i] != '\0')
 	{
-		thecopy[i] = s1[i + start];
+		thecopy[i] = s1[i + start -1];
 		i++;
 	}
 	thecopy[i] = '\0';
