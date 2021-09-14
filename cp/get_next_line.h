@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 09:42:31 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/11 15:21:20 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/14 14:30:44 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 40
+#  define BUFFER_SIZE 1
 # endif
 
 // DEBUGGING, DELETE IT LATER
-# define PRINT_HERE(name, var) (printf("\n at line: %d, in file: %s var:%s %p\n", __LINE__, __FILE__, name,var ))
+# define PRINT_HERE(name, var) (printf("\n at line: %d, in file: %s value:%s %p\n", __LINE__, __FILE__, name,var ))
 
 char	*get_next_line(int fd);
 char	*ft_calloc(int size, char filler);

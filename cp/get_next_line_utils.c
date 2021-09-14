@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:10:38 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/11 17:07:35 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/14 14:34:02 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ int	ft_strchr(char *s, char c, int flag)
 	if (flag == 1 && !s)
 		return (-100);
 	i = 0;
-	while (s[i] && s)
+	while (s[i] != '\0')
 	{
 		if (s[i] == c)
+		{
+			// printf("location %d\n", i);
 			return (i);
+		}
 		i++;
 	}
 	return (-1);
@@ -59,7 +62,7 @@ char	*ft_strnjoin(char *previous, char *line, int size)
 	joined = malloc(size + j + 1);
 	if (!joined)
 		return (NULL);
-	while (i <= size + j)
+	while (i < size + j + 1)
 	{
 		if (i < j && previous != NULL)
 			joined[i] = previous[i];
@@ -68,6 +71,7 @@ char	*ft_strnjoin(char *previous, char *line, int size)
 		i++;
 	}
 	joined[i] = '\0';
+	// printf("joined %d\n", ft_strlen(joined));
 	if (previous)
 		ft_free(&previous);
 	return (joined);
@@ -84,11 +88,12 @@ char	*ft_strndup(char *s1, int start, int length)
 	thecopy = malloc(length + 1);
 	if (thecopy == NULL)
 		return (NULL);
-	while (i < length && s1 && s1[i] != '\0')
+	while (i < length)
 	{
-		thecopy[i] = s1[i + start -1];
+		thecopy[i] = s1[i + start];
 		i++;
 	}
 	thecopy[i] = '\0';
+	// printf("copy %s\n", thecopy);
 	return (thecopy);
 }
