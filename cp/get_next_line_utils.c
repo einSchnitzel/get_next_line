@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:10:38 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/14 14:34:02 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/14 17:09:23 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*ft_strndup(char *s1, int start, int length)
 	int		i;
 
 	i = 0;
-	if (s1 == NULL)
+	if (s1 == NULL || !s1 || length < 1)
 		return (NULL);
 	thecopy = malloc(length + 1);
 	if (thecopy == NULL)
