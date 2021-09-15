@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:07:46 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/15 14:30:43 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/15 15:13:31 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 /*
 ** read BUFFER_SIZE bytes
 ** if newline in buffer, save the things from after newline into const char
@@ -86,7 +86,7 @@ char	*ft_prepnext(char **tonext, int location, int size)
 
 char	*get_next_line(int fd)
 {
-	static char	*tonext = NULL;
+	static char	*tonext[10000];
 	char		*line;
 	int			location;
 	ssize_t		size;
@@ -94,9 +94,9 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 500)
 		return (NULL);
 	line = NULL;
-	if (tonext == NULL)
-		tonext = ft_calloc(1, '\0');
-	location = ft_strchr(tonext, '\n', 0);
+	if (tonext[fd] == NULL)
+		tonext[fd] = ft_calloc(1, '\0');
+	location = ft_strchr(tonext[fd], '\n', 0);
 	while (location == -1 && location != -100)
 	{
 		line = ft_calloc(BUFFER_SIZE + 1, 1);
@@ -105,12 +105,12 @@ char	*get_next_line(int fd)
 		size = read(fd, line, BUFFER_SIZE);
 		if (size <= 0)
 			break ;
-		tonext = ft_strnjoin(tonext, line, size);
-		location = ft_strchr(tonext, '\n', 1);
+		tonext[fd] = ft_strnjoin(tonext[fd], line, size);
+		location = ft_strchr(tonext[fd], '\n', 1);
 		ft_free(&line);
 	}
 	ft_free(&line);
-	return (ft_prepnext(&tonext, location, size));
+	return (ft_prepnext(&tonext[fd], location, size));
 }
 //If last line empty file == 0 it s the end of string
 //if read returns less than buffer size but is > than 0 it is the last line
