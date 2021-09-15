@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:10:38 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/15 10:02:25 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/15 11:47:45 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,15 @@
 
 void	ft_free(char **line)
 {
+	int len;
+	int i;
+
+	i = 0;
+	len = ft_strlen(*line);
 	if (*line)
+	{
 		free(*line);
+	}
 	*line = NULL;
 }
 
@@ -77,7 +84,7 @@ char	*ft_strnjoin(char *previous, char *line, int size)
 	return (joined);
 }
 
-char	*ft_strndup(char *s1, int start, int length)//
+char	*ft_strndup(char *s1, int start, int length)
 {
 	char	*thecopy;
 	int		i;
@@ -86,7 +93,7 @@ char	*ft_strndup(char *s1, int start, int length)//
 	thecopy = NULL;
 	if (s1 == NULL || !s1 || length < 1)
 		return (NULL);
-	thecopy = malloc(length + 1);
+	thecopy = ft_calloc(length + 1, '\0');
 	if (thecopy == NULL)
 		return (NULL);
 	while (i < length)

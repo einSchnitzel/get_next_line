@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:07:46 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/15 10:17:09 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/15 13:47:31 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,18 @@ char	*ft_prepnext(char **tonext, int location, int size)
 	int		length;
 
 	length = ft_strlen(*tonext);
-	buff = NULL;
 	helper = NULL;
-	buff = ft_strndup(*tonext, 0, length);
-	//PRINT_HERE(buff, buff);
-	printf("location %d length %d size %d strlen tonext %d\ntonext %.30s \n", location, length, size, ft_strlen(*tonext), *tonext);
-	if (length < 1 || size <= -1 || tonext[0] == '\0' || tonext == NULL)
-	{
+	buff = NULL;
+	//printf("location %d length %d size %d strlen tonext %d\ntonext %.30s \n", location, length, size, ft_strlen(*tonext), *tonext);
+	if (length < 1 || size == -1 || tonext[0] == '\0' || tonext == NULL)
 		ft_free(tonext);
-		ft_free(&buff);
-		return (helper);
-	}
 	else
 	{
 		//PRINT_HERE(buff, buff);
-		if (location <= 0 && buff[0] != '\n')
+		if (location <= 0 && *tonext[0] != '\n')
 		{
+			buff = ft_strndup(*tonext, 0, length);
 			ft_free(tonext);
-			ft_free(&helper);
 			return (buff);
 		}
 		else
@@ -72,15 +66,13 @@ char	*ft_prepnext(char **tonext, int location, int size)
 				location = 1;
 			helper = ft_strndup(*tonext, 0, location + 1);
 			//PRINT_HERE(helper, helper);
-			ft_free(&buff);
 			buff = ft_strndup(*tonext, location + 1, length - location);
 			ft_free(tonext);
 			*tonext = ft_strndup(buff, 0, length - location);
 			ft_free(&buff);
-			return (helper);
 		}
 	}
-	
+	return (helper);
 }
 
 char	*get_next_line(int fd)
@@ -88,8 +80,8 @@ char	*get_next_line(int fd)
 	static char	*tonext = NULL;
 	char		*line;
 	int			location;
-	int			size;
-	
+	ssize_t		size;
+
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 500)
 		return (NULL);
 	line = NULL;
@@ -105,12 +97,10 @@ char	*get_next_line(int fd)
 		if (size <= 0)
 			break ;
 		tonext = ft_strnjoin(tonext, line, size);
-		//printf("location %d line %s %p\n length %d tonext %s\n", location, line, &line, ft_strlen(tonext), tonext);
 		location = ft_strchr(tonext, '\n', 1);
 		ft_free(&line);
 	}
 	ft_free(&line);
-	//PRINT_HERE(tonext, tonext);
 	return (ft_prepnext(&tonext, location, size));
 }
 //If last line empty file == 0 it s the end of string
