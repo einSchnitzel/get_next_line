@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 10:07:14 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/14 14:49:31 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/15 09:42:08 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	main(void)
 {
 	int		fd;
 
-	fd = open("test.txt", O_RDONLY);
+	fd = open("/Users/smetzler/42/owngit/get_next_line/cp/gnl_tester/files/multiple_nlx5", O_RDONLY);
 	gnl(fd, 1);
 	gnl(fd, 2);
 	gnl(fd, 3);
 	gnl(fd, 4);
 	gnl(fd, 5);
 	gnl(fd, 6);
-	gnl(fd, 7);
-	gnl(fd, 8);
+	// gnl(fd, 7);
+	// gnl(fd, 8);
  }

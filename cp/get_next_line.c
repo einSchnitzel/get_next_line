@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:07:46 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/14 17:07:51 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:17:09 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*ft_calloc(int size, char filler)
 	int		i;
 
 	i = 0;
+	buffer = NULL;
 	buffer = (char *) malloc(size);
 	if (buffer == NULL)
 		return (NULL);
@@ -45,48 +46,56 @@ char	*ft_prepnext(char **tonext, int location, int size)
 	int		length;
 
 	length = ft_strlen(*tonext);
-
-	printf("location %d length %d size %d strlen tonext %d\ntonext %s \n", location, length, size, ft_strlen(*tonext), *tonext);
-	if (*tonext && location >= 0) //1st to last -1 line
+	buff = NULL;
+	helper = NULL;
+	buff = ft_strndup(*tonext, 0, length);
+	//PRINT_HERE(buff, buff);
+	printf("location %d length %d size %d strlen tonext %d\ntonext %.30s \n", location, length, size, ft_strlen(*tonext), *tonext);
+	if (length < 1 || size <= -1 || tonext[0] == '\0' || tonext == NULL)
 	{
-		helper = ft_strndup(*tonext, 0, location + 1);
-		buff = ft_strndup(*tonext, location + 1, length - location);
-		free(*tonext);
-		*tonext = ft_strndup(buff, 0, length - location);
-		//PRINT_HERE(*tonext, *tonext);
-	}
-	else if (location == -1 && (size < BUFFER_SIZE && size >= 0) && length != 0)// last line
-	{
-		helper = ft_strndup(*tonext, 0, length);
-		//PRINT_HERE(*tonext, *tonext);
 		ft_free(tonext);
+		ft_free(&buff);
+		return (helper);
 	}
 	else
 	{
-		helper = NULL;
-		ft_free(tonext);
+		//PRINT_HERE(buff, buff);
+		if (location <= 0 && buff[0] != '\n')
+		{
+			ft_free(tonext);
+			ft_free(&helper);
+			return (buff);
+		}
+		else
+		{
+			if (location < 0)
+				location = 1;
+			helper = ft_strndup(*tonext, 0, location + 1);
+			//PRINT_HERE(helper, helper);
+			ft_free(&buff);
+			buff = ft_strndup(*tonext, location + 1, length - location);
+			ft_free(tonext);
+			*tonext = ft_strndup(buff, 0, length - location);
+			ft_free(&buff);
+			return (helper);
+		}
 	}
-	printf("tonext");
-	//PRINT_HERE(*tonext, *tonext);
-	return (helper);
+	
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*tonext;
+	static char	*tonext = NULL;
 	char		*line;
 	int			location;
 	int			size;
-
+	
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 500)
 		return (NULL);
 	line = NULL;
 	if (tonext == NULL)
-		tonext = malloc(BUFFER_SIZE + 1);
-	// printf("tonext");
-	//PRINT_HERE(tonext, tonext);
+		tonext = ft_calloc(1, '\0');
 	location = ft_strchr(tonext, '\n', 0);
-	//printf("location %d\nstart while\n",location);
 	while (location == -1 && location != -100)
 	{
 		line = ft_calloc(BUFFER_SIZE + 1, 1);
@@ -96,8 +105,8 @@ char	*get_next_line(int fd)
 		if (size <= 0)
 			break ;
 		tonext = ft_strnjoin(tonext, line, size);
+		//printf("location %d line %s %p\n length %d tonext %s\n", location, line, &line, ft_strlen(tonext), tonext);
 		location = ft_strchr(tonext, '\n', 1);
-		// printf("location %d tonext %s\n", location, tonext);
 		ft_free(&line);
 	}
 	ft_free(&line);
@@ -106,3 +115,5 @@ char	*get_next_line(int fd)
 }
 //If last line empty file == 0 it s the end of string
 //if read returns less than buffer size but is > than 0 it is the last line
+
+// realloc instead of join
