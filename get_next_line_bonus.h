@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 09:42:31 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/15 11:22:37 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/15 15:12:55 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -27,6 +27,7 @@
 
 char	*get_next_line(int fd);
 char	*ft_calloc(int size, char filler);
+char	*ft_makereturn(char **tonext, int location);
 char	*ft_prepnext(char **tonext, int location, int size);
 void	ft_free(char **line);
 int		ft_strlen(char *str);
