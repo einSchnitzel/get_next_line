@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:10:38 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/15 16:14:32 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/16 16:18:18 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 void	ft_free(char **line)
 {
-	int	len;
-	int	i;
-
-	i = 0;
-	len = ft_strlen(*line);
 	if (*line)
 	{
 		free(*line);

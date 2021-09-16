@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:07:46 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/15 17:07:57 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/16 16:47:03 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*ft_prepnext(char **tonext, int location, int size)
 
 	length = ft_strlen(*tonext);
 	buff = NULL;
-	if (length < 1 || size == -1 || tonext[0] == '\0' || tonext == NULL)
+	if (length < 1 || size == -1 || *tonext[0] == '\0' || tonext == NULL)
 		ft_free(tonext);
 	else
 	{
@@ -101,7 +101,7 @@ char	*get_next_line(int fd)
 	int			location;
 	ssize_t		size;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 500)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = NULL;
 	if (tonext[fd] == NULL)
