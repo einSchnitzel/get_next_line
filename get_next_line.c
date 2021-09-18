@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:07:46 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/16 18:51:10 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/18 14:38:43 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,20 @@ char	*ft_prepnext(char **tonext, int location, int size)
 	return (buff);
 }
 
+void	ft_initvalues(char **tonext, t_vars *vars)
+{
+	vars->line = ft_calloc(BUFFER_SIZE, '\0');
+	if (vars->line == NULL)
+	{
+		ft_free(tonext);
+		return ;
+	}
+	vars->location = ft_strchr(*tonext, '\n', 0);
+	vars->size = 0;
+
+	return ;
+}
+
 /*
 ** static, variable to keep the content after newline for the next call
 ** line, content read
@@ -96,29 +110,24 @@ char	*ft_prepnext(char **tonext, int location, int size)
 char	*get_next_line(int fd)
 {
 	static char	*tonext = NULL;
-	char		*line;
-	int			location;
-	ssize_t		size;
+	t_vars		vars;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = NULL;
-	size = 0;
 	if (tonext == NULL)
 		tonext = ft_calloc(1, '\0');
-	location = ft_strchr(tonext, '\n', 0);
-	line = ft_calloc(BUFFER_SIZE, '\0');
-	if (line == NULL)
+	if (tonext == NULL)
 		return (NULL);
-	while (location == -1 && location != -100)
+	ft_initvalues(&tonext, &vars);
+	while (vars.location == -1 && vars.location != -100)
 	{
-		size = read(fd, line, BUFFER_SIZE);
-		if (size <= 0)
+		vars.size = read(fd, vars.line, BUFFER_SIZE);
+		if (vars.size <= 0)
 			break ;
-		line[size] = '\0';
-		tonext = ft_strnjoin(tonext, line, size);
-		location = ft_strchr(tonext, '\n', 1);
+		vars.line[vars.size] = '\0';
+		tonext = ft_strnjoin(tonext, vars.line, vars.size);
+		vars.location = ft_strchr(tonext, '\n', 1);
 	}
-	ft_free(&line);
-	return (ft_prepnext(&tonext, location, size));
+	ft_free(&vars.line);
+	return (ft_prepnext(&tonext, vars.location, vars.size));
 }

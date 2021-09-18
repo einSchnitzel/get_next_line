@@ -6,28 +6,27 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:07:46 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/16 16:47:03 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/16 19:46:15 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
 /*
 ** read BUFFER_SIZE bytes
 ** if a newline is in buffer, save the things from after newline into const char
 ** add the content of the following buffer into the const char
 */
-char	*ft_calloc(int size, char filler)
+char	*ft_calloc(ssize_t size, char filler)
 {
 	char	*buffer;
-	int		i;
+	ssize_t	i;
 
 	i = 0;
 	buffer = NULL;
-	buffer = (char *) malloc(size);
+	buffer = (char *) malloc(size + 1);
 	if (buffer == NULL)
 		return (NULL);
-	while (i <= size)
+	while (i < size)
 	{
 		buffer[i] = filler;
 		i++;
@@ -63,14 +62,14 @@ char	*ft_makereturn(char **tonext, int location)
 ** if there is a string and no \n found and no \n at 0 safe to buff and free
 ** if there is content divide the string on \n, see ft_makereturn
 */
-char	*ft_prepnext(char **tonext, int location, int size)
+char	*ft_prepnext(char **tonext, int location, ssize_t size)
 {
 	char	*buff;
 	int		length;
 
 	length = ft_strlen(*tonext);
 	buff = NULL;
-	if (length < 1 || size == -1 || *tonext[0] == '\0' || tonext == NULL)
+	if (length < 1 || size == -1 || *tonext[0] == '\0' || !tonext)
 		ft_free(tonext);
 	else
 	{
@@ -104,20 +103,21 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = NULL;
+	size = 0;
 	if (tonext[fd] == NULL)
 		tonext[fd] = ft_calloc(1, '\0');
 	location = ft_strchr(tonext[fd], '\n', 0);
+	line = ft_calloc(BUFFER_SIZE, '\0');
+	if (line == NULL)
+		return (NULL);
 	while (location == -1 && location != -100)
 	{
-		line = ft_calloc(BUFFER_SIZE + 1, 1);
-		if (line == NULL)
-			return (NULL);
 		size = read(fd, line, BUFFER_SIZE);
 		if (size <= 0)
 			break ;
+		line[size] = '\0';
 		tonext[fd] = ft_strnjoin(tonext[fd], line, size);
 		location = ft_strchr(tonext[fd], '\n', 1);
-		ft_free(&line);
 	}
 	ft_free(&line);
 	return (ft_prepnext(&tonext[fd], location, size));

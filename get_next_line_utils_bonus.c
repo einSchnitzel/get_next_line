@@ -6,7 +6,7 @@
 /*   By: smetzler <smetzler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:10:38 by smetzler          #+#    #+#             */
-/*   Updated: 2021/09/16 15:27:40 by smetzler         ###   ########.fr       */
+/*   Updated: 2021/09/16 19:45:21 by smetzler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strnjoin(char *previous, char *line, int size)
+char	*ft_strnjoin(char *previous, char *line, ssize_t size)
 {
 	char	*joined;
 	int		i;
