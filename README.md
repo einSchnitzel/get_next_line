@@ -2,6 +2,7 @@
 
 ## 42 Main course project
 
-# main lesson: How to avoid segfaults, free and properly allocate memory.
+### main lesson:  How to avoid segfaults, free and properly allocate memory.
 
-# learned also: debugging and basic use of containers with docker.
+### learned also: Debugging and basic use of containers with docker.
+### improved:     Usage of structs.
