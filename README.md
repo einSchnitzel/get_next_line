@@ -14,4 +14,4 @@
 ### Main lesson:  How to avoid segfaults, properly free and allocate memory.
 
 ### Learned also: VS Code Debugger, manual debugging and basic use of containers with Docker.
-### Improved:     Usage of structs.
+### Improved:     Usage of structs. Basic use of Valgrind.
