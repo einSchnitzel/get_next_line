@@ -6,8 +6,8 @@
 
 ### passed with all bonuses:
 
-###- usage of one static variable only
-###- usage of multiple file descriptors without losing track.
+####- usage of one static variable only
+####- usage of multiple file descriptors without losing track.
 
 ## My takeaways:
 
